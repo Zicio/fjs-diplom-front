@@ -1,0 +1,19 @@
+.form {
+  @apply grid auto-rows-auto gap-4;
+
+  .form__label {
+    @apply hidden;
+  }
+
+  .form__input {
+    @apply p-1 w-full border rounded-md;
+  }
+
+  .form_hint {
+    @apply text-red-500;
+  }
+
+  .form__button {
+    @apply w-fit p-1 text-white rounded-md;
+  }
+}

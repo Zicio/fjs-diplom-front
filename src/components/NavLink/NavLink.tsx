@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { FC } from "react";
+import styles from "./NavLink.module.scss";
 
 const NavLink: FC<{ href: string; text: string }> = ({ href, text }) => {
   return (
-    <li className="mb-8 last:mb-0">
+    <li className={styles.nav__link}>
       <Link href={href}>{text}</Link>
     </li>
   );

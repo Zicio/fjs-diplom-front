@@ -1,0 +1,7 @@
+.nav {
+  @apply bg-white p-2 rounded-md;
+
+  .nav__list {
+    @apply list-['▸'] p-5;
+  }
+}
