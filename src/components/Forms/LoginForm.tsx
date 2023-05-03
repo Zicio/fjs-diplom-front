@@ -25,9 +25,8 @@ const LoginForm = () => {
   });
 
   const {
-    register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = methods;
 
   const [errorResponse, setErrorResponse] = useState<string | null>(null);

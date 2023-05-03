@@ -27,9 +27,8 @@ const RegisterForm = () => {
   });
 
   const {
-    register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = methods;
 
   const [errorResponse, setErrorResponse] = useState<string | null>(null);
@@ -108,6 +107,7 @@ const RegisterForm = () => {
         >
           Зарегистрироваться
         </button>
+        {errorResponse && <p className={styles.form_hint}>errorResponse</p>}
       </form>
     </FormProvider>
   );
