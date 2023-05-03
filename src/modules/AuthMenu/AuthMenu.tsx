@@ -9,6 +9,9 @@ import styles from "./AuthMenu.module.scss";
 const AuthMenu = () => {
   const [typeOfForm, setTypeOfForm] = useState<TypeOfForm>("login");
 
+  if (typeOfForm === "login") {
+  }
+
   return (
     <section className={styles.authMenu}>
       <span>
