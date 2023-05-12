@@ -24,5 +24,9 @@ body {
 }
 
 .main-logo {
-    @apply w-52  min-w-[150px];
+    @apply w-52 min-w-[150px];
+}
+
+.standard-container {
+    @apply bg-white p-2 rounded-md;
 }

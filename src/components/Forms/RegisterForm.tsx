@@ -6,6 +6,7 @@ import registerSchema from "@/utils/schemas/registerSchema";
 import styles from "./Form.module.scss";
 import { useState } from "react";
 import FormField from "@/components/FormField/FormField";
+import Button from "@/components/Button/Button";
 
 type FormValues = {
   email: string;
@@ -98,15 +99,7 @@ const RegisterForm = () => {
           name="contactPhone"
           placeholder="Введите номер телефона*"
         />
-        <button
-          className={`${
-            isValid ? "bg-blue-700 hover:bg-blue-500" : "bg-blue-700 opacity-50"
-          } ${styles.form__button} `}
-          type="submit"
-          disabled={!isValid}
-        >
-          Зарегистрироваться
-        </button>
+        <Button type="submit" isValid={isValid} text="Войти" />
         {errorResponse && <p className={styles.form_hint}>errorResponse</p>}
       </form>
     </FormProvider>

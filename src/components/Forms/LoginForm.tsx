@@ -6,6 +6,7 @@ import loginSchema from "@/utils/schemas/loginSchema";
 import styles from "./Form.module.scss";
 import { useState } from "react";
 import FormField from "@/components/FormField/FormField";
+import Button from "@/components/Button/Button";
 
 type FormValues = {
   email: string;
@@ -82,15 +83,7 @@ const LoginForm = () => {
           name="password"
           placeholder="Введите пароль*"
         />
-        <button
-          className={`${
-            isValid ? "bg-blue-700 hover:bg-blue-500" : "bg-blue-700 opacity-50"
-          } ${styles.form__button} `}
-          type="submit"
-          disabled={!isValid}
-        >
-          Войти
-        </button>
+        <Button type="submit" isValid={isValid} text="Войти" />
         {errorResponse && <p className={styles.form_hint}>errorResponse</p>}
       </form>
     </FormProvider>
