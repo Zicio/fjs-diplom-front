@@ -8,20 +8,21 @@ import { useState } from "react";
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
 
-type FormValues = {
+interface FormValues {
   email: string;
   password: string;
-};
+}
 
-type LoginResponse = {
+interface LoginResponse {
   email: string;
   name: string;
   contactPhone: string;
-};
+}
 
 const LoginForm = () => {
   const methods = useForm<FormValues>({
     mode: "onBlur",
+    reValidateMode: "onBlur",
     resolver: yupResolver(loginSchema),
   });
 

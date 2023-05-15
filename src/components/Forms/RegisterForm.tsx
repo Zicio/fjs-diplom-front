@@ -24,6 +24,7 @@ type RegisterResponse = {
 const RegisterForm = () => {
   const methods = useForm<FormValues>({
     mode: "onBlur",
+    reValidateMode: "onBlur",
     resolver: yupResolver(registerSchema),
   });
 

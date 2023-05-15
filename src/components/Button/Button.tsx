@@ -8,11 +8,20 @@ interface ButtonProps {
 }
 
 const Button: FC<ButtonProps> = ({ type, isValid, text }) => {
+  if (isValid === undefined) {
+    return (
+      <button className={styles.button + " " + styles.activeButton} type={type}>
+        {text}
+      </button>
+    );
+  }
   return (
     <button
-      className={`${
-        isValid ? "bg-blue-700 hover:bg-blue-500" : "bg-blue-700 opacity-50"
-      } ${styles.button} `}
+      className={
+        styles.button +
+        " " +
+        (isValid ? styles.activeButton : styles.unactiveButton)
+      }
       type={type}
       disabled={!isValid}
     >

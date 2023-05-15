@@ -1,13 +1,7 @@
-import SearchForm from "@/components/Forms/SearchForm";
+import Users from "@/modules/Users/Users";
 
 const UsersPage = async () => {
-  return (
-    <main>
-      <h1>Пользователи</h1>
-      <SearchForm />
-      {/*<UsersList />*/}
-    </main>
-  );
+  return <Users />;
 };
 
 export default UsersPage;
