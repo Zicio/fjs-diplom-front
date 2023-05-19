@@ -5,10 +5,10 @@ const UserItem: FC<{ params: IUser }> = ({ params }) => {
   const { id, name, email, contactPhone } = params;
   return (
     <tr>
-      <th>{id}</th>
-      <th>{name}</th>
-      <th>{email}</th>
-      <th>{contactPhone}</th>
+      <td>{id}</td>
+      <td>{name}</td>
+      <td>{email}</td>
+      <td>{contactPhone}</td>
     </tr>
   );
 };

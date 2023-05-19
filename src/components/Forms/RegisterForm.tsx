@@ -7,6 +7,7 @@ import styles from "./Form.module.scss";
 import { useState } from "react";
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
+import { authRequest } from "@/components/Forms/authForms-Api";
 
 type FormValues = {
   email: string;
@@ -37,31 +38,18 @@ const RegisterForm = () => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await fetch(
-        process.env.BACKEND_URL + "/api/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        },
-      );
-      if (response.status === 401) {
-        throw new Error(
-          "Пользователь с таким email не найден / неверный пароль",
-        );
-      }
-      if (response.ok) {
+      const response = await authRequest(data, "register");
+      if (response?.ok) {
         const json: RegisterResponse = await response.json();
         console.log(json); // TODO обработать успешный ответ от сервера
+      } else {
+        const message = await response?.text();
+        throw new Error(message);
       }
-    } catch (e: unknown) {
+    } catch (e) {
       if (e instanceof Error) {
         setErrorResponse(e.message);
-        return;
       }
-      console.error("Unknown error:", e);
     }
   };
 
@@ -100,7 +88,7 @@ const RegisterForm = () => {
           name="contactPhone"
           placeholder="Введите номер телефона*"
         />
-        <Button type="submit" isValid={isValid} text="Войти" />
+        <Button type="submit" isActive={isValid} text="Войти" />
         {errorResponse && <p className={styles.form_hint}>errorResponse</p>}
       </form>
     </FormProvider>

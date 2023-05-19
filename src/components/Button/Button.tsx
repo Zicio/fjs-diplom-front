@@ -4,26 +4,19 @@ import styles from "./Button.module.scss";
 interface ButtonProps {
   type: "button" | "submit" | "reset" | undefined;
   text: string;
-  isValid?: boolean;
+  isActive: boolean;
 }
 
-const Button: FC<ButtonProps> = ({ type, isValid, text }) => {
-  if (isValid === undefined) {
-    return (
-      <button className={styles.button + " " + styles.activeButton} type={type}>
-        {text}
-      </button>
-    );
-  }
+const Button: FC<ButtonProps> = ({ type, isActive = true, text }) => {
   return (
     <button
       className={
         styles.button +
         " " +
-        (isValid ? styles.activeButton : styles.unactiveButton)
+        (isActive ? styles.activeButton : styles.unactiveButton)
       }
       type={type}
-      disabled={!isValid}
+      disabled={!isActive}
     >
       {text}
     </button>

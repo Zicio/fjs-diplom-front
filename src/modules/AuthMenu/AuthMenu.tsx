@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import TypeOfForm from "@/types/typeOfForm";
 import LoginForm from "@/components/Forms/LoginForm";
 import RegisterForm from "@/components/Forms/RegisterForm";
 import styles from "./AuthMenu.module.scss";
+
+export type TypeOfForm = "login" | "register";
 
 const AuthMenu = () => {
   const [typeOfForm, setTypeOfForm] = useState<TypeOfForm>("login");

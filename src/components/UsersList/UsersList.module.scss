@@ -1,0 +1,13 @@
+.table {
+  @apply text-center table-auto w-[80%] ;
+
+  .tableHead {
+    @apply bg-gray-300;
+  }
+
+  tr:nth-child(even) {
+    @apply bg-gray-300;
+  }
+}
+
+

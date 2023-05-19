@@ -7,13 +7,14 @@ import styles from "./Form.module.scss";
 import { useState } from "react";
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
+import { authRequest } from "@/components/Forms/authForms-Api";
 
-interface FormValues {
+export interface FormValues {
   email: string;
   password: string;
 }
 
-interface LoginResponse {
+export interface LoginResponse {
   email: string;
   name: string;
   contactPhone: string;
@@ -35,31 +36,18 @@ const LoginForm = () => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await fetch(
-        process.env.BACKEND_URL + "/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        },
-      );
-      if (response.status === 401) {
-        throw new Error(
-          "Пользователь с таким email не найден / неверный пароль",
-        );
-      }
-      if (response.ok) {
+      const response = await authRequest(data, "login");
+      if (response?.ok) {
         const json: LoginResponse = await response.json();
         console.log(json); // TODO обработать успешный ответ от сервера
+      } else {
+        const message = await response?.text();
+        throw new Error(message);
       }
-    } catch (e: unknown) {
+    } catch (e) {
       if (e instanceof Error) {
         setErrorResponse(e.message);
-        return;
       }
-      console.error("Unknown error:", e);
     }
   };
 
@@ -84,7 +72,7 @@ const LoginForm = () => {
           name="password"
           placeholder="Введите пароль*"
         />
-        <Button type="submit" isValid={isValid} text="Войти" />
+        <Button type="submit" isActive={isValid} text="Войти" />
         {errorResponse && <p className={styles.form_hint}>errorResponse</p>}
       </form>
     </FormProvider>

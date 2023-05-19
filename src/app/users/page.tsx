@@ -1,6 +1,6 @@
 import Users from "@/modules/Users/Users";
 
-const UsersPage = async () => {
+const UsersPage = () => {
   return <Users />;
 };
 

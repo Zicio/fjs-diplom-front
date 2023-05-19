@@ -1,5 +1,6 @@
 import IUser from "@/interfaces/IUser";
 import UserItem from "@/components/UserItem/UserItem";
+import styles from "./UsersList.module.scss";
 
 const mockUsers: IUser[] = [
   {
@@ -14,12 +15,18 @@ const mockUsers: IUser[] = [
     contactPhone: "8-911-111-11-11",
     email: "XXXXXXXXXXXXXX",
   },
+  {
+    id: "3",
+    name: "Сержант Сержанов",
+    contactPhone: "8-911-111-11-11",
+    email: "XXXXXXXXXXXXXX",
+  },
 ];
 
 const UsersList = () => {
   return (
-    <table>
-      <thead>
+    <table className={styles.table}>
+      <thead className={styles.tableHead}>
         <tr>
           <th>ID</th>
           <th>ФИО</th>

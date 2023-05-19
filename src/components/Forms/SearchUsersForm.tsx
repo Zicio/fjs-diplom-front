@@ -9,7 +9,7 @@ interface FormValues {
   searchUser: string;
 }
 
-const SearchForm = () => {
+const SearchUsersForm = () => {
   const methods = useForm<FormValues>({
     mode: "onSubmit",
   });
@@ -23,10 +23,10 @@ const SearchForm = () => {
           name="searchUser"
           placeholder="Введите имя пользователя, id, телефон или почту"
         />
-        <Button type="submit" text="Искать" />
+        <Button type="submit" text="Искать" isActive={true} />
       </form>
     </FormProvider>
   );
 };
 
-export default SearchForm;
+export default SearchUsersForm;

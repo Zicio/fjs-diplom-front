@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../styles/globals.css";
 import Image from "next/image";
 import logo from "../../public/logo.png";
 import Navbar from "@/modules/NavBar/Navbar";
@@ -8,6 +8,7 @@ import { Roboto } from "next/font/google";
 const roboto = Roboto({
   weight: "400",
   subsets: ["cyrillic"],
+  display: "swap",
 });
 
 export default function RootLayout({
