@@ -16,7 +16,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    token.current = document.cookie.indexOf("jwt_token=");
+    token.current = document.cookie.indexOf("token");
   }, []);
 
   return (

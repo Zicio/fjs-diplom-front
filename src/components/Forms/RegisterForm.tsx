@@ -41,7 +41,8 @@ const RegisterForm = () => {
       const response = await authRequest(data, "register");
       if (response?.ok) {
         const json: RegisterResponse = await response.json();
-        console.log(json); // TODO обработать успешный ответ от сервера
+        localStorage.user = JSON.stringify(json);
+        console.log(json);
       } else {
         const message = await response?.text();
         throw new Error(message);

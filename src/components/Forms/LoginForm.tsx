@@ -39,7 +39,6 @@ const LoginForm = () => {
       const response = await authRequest(data, "login");
       if (response?.ok) {
         const json: LoginResponse = await response.json();
-        console.log(json); // TODO обработать успешный ответ от сервера
       } else {
         const message = await response?.text();
         throw new Error(message);
