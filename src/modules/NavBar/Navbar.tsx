@@ -8,6 +8,9 @@ const Navbar = () => {
         <NavLink href={"/hotels"} text={"Все гостиницы"} />
         <NavLink href={"/search_room"} text={"Поиск номера"} />
         <NavLink href={"/hotels/add"} text={"Добавить гостиницу"} />
+        {typeof window !== "undefined" && localStorage.role === "admin" && (
+          <NavLink href={"/admin/user"} text={"Контакты"} />
+        )}
       </ul>
     </nav>
   );

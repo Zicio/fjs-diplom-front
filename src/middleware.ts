@@ -22,11 +22,20 @@ export const middleware = (request: NextRequest) => {
     role = accessTokenData?.role;
   }
 
+  // if (request.nextUrl.pathname.startsWith("/admin") && role !== "admin") {
+  //   return new NextResponse(
+  //     JSON.stringify({
+  //       success: false,
+  //       message: "Для доступа к этой странице требуются права администратора",
+  //     }),
+  //     { status: 401, headers: { "content-type": "application/json" } },
+  //   );
+  // }
+
   if (
     (request.nextUrl.pathname.startsWith("/admin") && role !== "admin") ||
     (request.nextUrl.pathname.startsWith("/manager") && role !== "manager")
   ) {
-    // TODO: сделать попап с ошибкой прав доступа
     return NextResponse.redirect(new URL("/", request.url));
   }
 };

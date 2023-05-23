@@ -1,11 +1,12 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import accessErrorReducer from "./features/AccessErrorSlice";
 
 // import counterReducer from './features/counter/counterSlice'
 
 export function makeStore() {
   return configureStore({
     reducer: {
-      counter: () => {},
+      accessErrorReducer,
     },
   });
 }
