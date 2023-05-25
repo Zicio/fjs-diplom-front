@@ -10,9 +10,6 @@ export type TypeOfForm = "login" | "register";
 const AuthMenu = () => {
   const [typeOfForm, setTypeOfForm] = useState<TypeOfForm>("login");
 
-  if (typeOfForm === "login") {
-  }
-
   return (
     <section className={styles.authMenu}>
       <span>

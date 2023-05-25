@@ -36,7 +36,7 @@ const UsersList = () => {
       </thead>
       <tbody>
         {mockUsers.map((user) => {
-          //TODO заменить на список юзеров из запроса (Предположительно хранение в Redux Store)
+          //TODO заменить на список юзеров из запроса
           return <UserItem key={user.id} params={user} />;
         })}
       </tbody>

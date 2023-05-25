@@ -8,8 +8,6 @@ import { useState } from "react";
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
 import { authRequest } from "@/components/Forms/authForms-Api";
-import Cookies from "js-cookie";
-import jwt_decode from "jwt-decode";
 
 export interface FormValues {
   email: string;
@@ -41,13 +39,6 @@ const LoginForm = () => {
       const response = await authRequest(data, "login");
       if (response?.ok) {
         const json: LoginResponse = await response.json();
-        localStorage.role = (
-          jwt_decode(
-            Cookies.get(
-              process.env.AUTH_TOKEN_NAME || "access_token",
-            ) as string,
-          ) as any
-        ).role;
       } else {
         const message = await response?.text();
         throw new Error(message);
