@@ -3,7 +3,7 @@
 import { useState } from "react";
 import LoginForm from "@/components/Forms/LoginForm";
 import RegisterForm from "@/components/Forms/RegisterForm";
-import styles from "./AuthMenu.module.scss";
+import styles from "./AuthMenu.module.css";
 
 export type TypeOfForm = "login" | "register";
 

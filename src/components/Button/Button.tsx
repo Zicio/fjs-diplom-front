@@ -1,5 +1,5 @@
 import { FC } from "react";
-import styles from "./Button.module.scss";
+import styles from "./Button.module.css";
 
 interface ButtonProps {
   type: "button" | "submit" | "reset" | undefined;

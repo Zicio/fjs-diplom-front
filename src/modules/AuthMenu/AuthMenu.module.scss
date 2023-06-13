@@ -1,7 +1,0 @@
-.authMenu {
-  @apply grid gap-6 w-80 absolute right-0 top-[110%] bg-white p-6 rounded-md;
-
-  .authMenu__button {
-    @apply text-purple-900 hover:text-purple-600 hover:underline;
-  }
-}

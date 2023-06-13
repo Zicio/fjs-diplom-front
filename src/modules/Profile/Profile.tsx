@@ -4,7 +4,7 @@ import Image from "next/image";
 import default_avatar from "../../../public/default_avatar.svg";
 import AuthMenu from "@/modules/AuthMenu/AuthMenu";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
-import styles from "./Profile.module.scss";
+import styles from "./Profile.module.css";
 
 const Profile = () => {
   const [isAuthForm, setIsAuthForm] = useState(false);

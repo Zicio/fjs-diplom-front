@@ -3,7 +3,7 @@
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
 import { FormProvider, useForm } from "react-hook-form";
-import styles from "./Form.module.scss";
+import styles from "./Form.module.css";
 
 interface FormValues {
   searchUser: string;
