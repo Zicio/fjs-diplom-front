@@ -2,29 +2,31 @@
 
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import loginSchema from "@/utils/schemas/loginSchema";
-import styles from "./Form.module.css";
+import registerSchema from "@/utils/schemas/registerSchema";
+import styles from "../Form.module.css";
 import { useState } from "react";
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
-import { authRequest } from "@/components/Forms/authForms-Api";
+import signUpRequest from "@/components/Forms/signUp/signUp-Api";
 
-export interface FormValues {
+export interface ISignUpFormValues {
   email: string;
   password: string;
-}
-
-export interface LoginResponse {
-  email: string;
   name: string;
   contactPhone: string;
 }
 
-const LoginForm = () => {
-  const methods = useForm<FormValues>({
+export interface ISignUpResponse {
+  id: string;
+  email: string;
+  name: string;
+}
+
+const SignUpForm = () => {
+  const methods = useForm<ISignUpFormValues>({
     mode: "onBlur",
     reValidateMode: "onBlur",
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(registerSchema),
   });
 
   const {
@@ -34,19 +36,15 @@ const LoginForm = () => {
 
   const [errorResponse, setErrorResponse] = useState<string | null>(null);
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: ISignUpFormValues) => {
     try {
-      const response = await authRequest(data, "login");
+      const response = await signUpRequest(data);
       if (response?.ok) {
-        const json: LoginResponse = await response.json();
-      } else {
-        const message = await response?.text();
-        throw new Error(message);
+        const json: ISignUpResponse = await response.json();
+        console.log(json);
       }
     } catch (e) {
-      if (e instanceof Error) {
-        setErrorResponse(e.message);
-      }
+      setErrorResponse((e as Error).message);
     }
   };
 
@@ -71,6 +69,20 @@ const LoginForm = () => {
           name="password"
           placeholder="Введите пароль*"
         />
+        <FormField
+          type="text"
+          text="Имя пользователя"
+          id="name"
+          name="name"
+          placeholder="Введите имя*"
+        />
+        <FormField
+          type="text"
+          text="Номер телефона пользователя"
+          id="contactPhone"
+          name="contactPhone"
+          placeholder="Введите номер телефона*"
+        />
         <Button type="submit" isActive={isValid} text="Войти" />
         {errorResponse && <p className={styles.form_hint}>errorResponse</p>}
       </form>
@@ -78,4 +90,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignUpForm;

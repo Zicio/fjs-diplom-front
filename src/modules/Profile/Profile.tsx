@@ -5,6 +5,7 @@ import default_avatar from "../../../public/default_avatar.svg";
 import AuthMenu from "@/modules/AuthMenu/AuthMenu";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import styles from "./Profile.module.css";
+import signOutRequest from "@/modules/Profile/signOut-Api";
 
 const Profile = () => {
   const [isAuthForm, setIsAuthForm] = useState(false);
@@ -15,6 +16,15 @@ const Profile = () => {
     return;
   };
 
+  const handleSignOut = async () => {
+    try {
+      await signOutRequest();
+      localStorage.removeItem("user");
+    } catch (e) {
+      throw new Error((e as Error).message);
+    }
+  };
+
   useEffect(() => {
     token.current = document.cookie.indexOf("token");
   }, []);
@@ -22,7 +32,9 @@ const Profile = () => {
   return (
     <div className={styles.profile}>
       {token.current !== -1 ? (
-        <button type="submit">Выйти</button>
+        <button type="submit" onClick={handleSignOut}>
+          Выйти
+        </button>
       ) : (
         <button type="button" onClick={handleIsAuthForm}>
           <span>{isAuthForm ? "▾" : "▸"}</span>
@@ -32,7 +44,7 @@ const Profile = () => {
       <div className={styles.profile__avatar}>
         <Image src={default_avatar} width={40} alt="неизвестный пользователь" />
       </div>
-      <div
+      <div // TODO вынести стили в css файл
         className={`transition-opacity duration-200 ${
           isAuthForm ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}

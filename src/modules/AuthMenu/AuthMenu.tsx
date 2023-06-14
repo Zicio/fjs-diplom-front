@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import LoginForm from "@/components/Forms/LoginForm";
-import RegisterForm from "@/components/Forms/RegisterForm";
+import SignInForm from "@/components/Forms/signIn/SignInForm";
+import SignUpForm from "@/components/Forms/signUp/SignUpForm";
 import styles from "./AuthMenu.module.css";
 
 export type TypeOfForm = "login" | "register";
@@ -29,7 +29,7 @@ const AuthMenu = () => {
           Зарегистрироваться
         </button>
       </span>
-      {typeOfForm === "login" ? <LoginForm /> : <RegisterForm />}
+      {typeOfForm === "login" ? <SignInForm /> : <SignUpForm />}
     </section>
   );
 };

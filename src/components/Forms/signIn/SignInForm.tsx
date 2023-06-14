@@ -2,31 +2,29 @@
 
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import registerSchema from "@/utils/schemas/registerSchema";
-import styles from "./Form.module.css";
+import loginSchema from "@/utils/schemas/loginSchema";
+import styles from "../Form.module.css";
 import { useState } from "react";
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
-import { authRequest } from "@/components/Forms/authForms-Api";
+import signInRequest from "@/components/Forms/signIn/signIn-Api";
 
-type FormValues = {
+export interface ISignInFormValues {
   email: string;
   password: string;
-  name: string;
-  contactPhone: string;
-};
+}
 
-type RegisterResponse = {
-  id: string;
+export interface ISignInResponse {
   email: string;
   name: string;
-};
+  contactPhone: string;
+}
 
-const RegisterForm = () => {
-  const methods = useForm<FormValues>({
+const SignInForm = () => {
+  const methods = useForm<ISignInFormValues>({
     mode: "onBlur",
     reValidateMode: "onBlur",
-    resolver: yupResolver(registerSchema),
+    resolver: yupResolver(loginSchema),
   });
 
   const {
@@ -36,21 +34,14 @@ const RegisterForm = () => {
 
   const [errorResponse, setErrorResponse] = useState<string | null>(null);
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: ISignInFormValues) => {
     try {
-      const response = await authRequest(data, "register");
-      if (response?.ok) {
-        const json: RegisterResponse = await response.json();
-        localStorage.user = JSON.stringify(json);
-        console.log(json);
-      } else {
-        const message = await response?.text();
-        throw new Error(message);
-      }
+      const response = await signInRequest(data);
+      const json: ISignInResponse = await response.json();
+      console.log(json);
+      localStorage.user = json;
     } catch (e) {
-      if (e instanceof Error) {
-        setErrorResponse(e.message);
-      }
+      setErrorResponse((e as Error).message);
     }
   };
 
@@ -75,20 +66,6 @@ const RegisterForm = () => {
           name="password"
           placeholder="Введите пароль*"
         />
-        <FormField
-          type="text"
-          text="Имя пользователя"
-          id="name"
-          name="name"
-          placeholder="Введите имя*"
-        />
-        <FormField
-          type="text"
-          text="Номер телефона пользователя"
-          id="contactPhone"
-          name="contactPhone"
-          placeholder="Введите номер телефона*"
-        />
         <Button type="submit" isActive={isValid} text="Войти" />
         {errorResponse && <p className={styles.form_hint}>errorResponse</p>}
       </form>
@@ -96,4 +73,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default SignInForm;

@@ -1,4 +1,4 @@
-export const getUsers = async () => {
+const getUsersRequest = async () => {
   try {
     const response = await fetch(process.env.BACKEND_URL + "/api/");
     return await response.json();
@@ -6,3 +6,5 @@ export const getUsers = async () => {
     console.log(e);
   }
 };
+
+export default getUsersRequest;

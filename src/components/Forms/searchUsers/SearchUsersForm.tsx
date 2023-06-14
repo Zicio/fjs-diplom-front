@@ -3,14 +3,14 @@
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
 import { FormProvider, useForm } from "react-hook-form";
-import styles from "./Form.module.css";
+import styles from "../Form.module.css";
 
-interface FormValues {
+interface ISearchUsersFormValues {
   searchUser: string;
 }
 
 const SearchUsersForm = () => {
-  const methods = useForm<FormValues>({
+  const methods = useForm<ISearchUsersFormValues>({
     mode: "onSubmit",
   });
   return (
