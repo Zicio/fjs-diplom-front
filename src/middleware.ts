@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isAdmin, isManager } from "@/utils/role";
+import getRole from "@/utils/getRole";
+
+const isClient = () => getRole() === "client";
+
+const isManager = () => getRole() === "manager";
+
+const isAdmin = () => getRole() === "admin";
 
 export const middleware = (request: NextRequest) => {
   if (
-    (request.nextUrl.pathname.startsWith("/admin") && isAdmin(request)) ||
-    (request.nextUrl.pathname.startsWith("/manager") && isManager(request))
+    (request.nextUrl.pathname.startsWith("/admin") && !isAdmin()) ||
+    (request.nextUrl.pathname.startsWith("/manager") && !isManager())
   ) {
-    return;
     return NextResponse.redirect(new URL("/", request.url));
   }
 };
