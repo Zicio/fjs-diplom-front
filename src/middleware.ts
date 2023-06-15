@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import getRole from "@/utils/getRole";
+import getCurrentUserRole from "@/utils/getCurrentUserRole";
 
-const isClient = () => getRole() === "client";
+const isClient = () => getCurrentUserRole() === "client";
 
-const isManager = () => getRole() === "manager";
+const isManager = () => getCurrentUserRole() === "manager";
 
-const isAdmin = () => getRole() === "admin";
+const isAdmin = () => getCurrentUserRole() === "admin";
 
 export const middleware = (request: NextRequest) => {
   if (
