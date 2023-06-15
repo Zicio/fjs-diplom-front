@@ -4,6 +4,7 @@ import logo from "../../public/logo.png";
 import Navbar from "@/modules/NavBar/Navbar";
 import Profile from "@/modules/Profile/Profile";
 import { Roboto } from "next/font/google";
+import Link from "next/link";
 
 const roboto = Roboto({
   weight: "400",
@@ -19,14 +20,14 @@ export default function RootLayout({
   return (
     <html lang="ru" className={roboto.className}>
       <body>
-        {/*<Providers>*/}
         <div className="main-container">
-          <Image className="main-logo" src={logo} alt={"Logo"} />
+          <Link href="/">
+            <Image className="main-logo" src={logo} alt={"Logo"} />
+          </Link>
           <Profile />
           <Navbar />
           <main>{children}</main>
         </div>
-        {/*</Providers>*/}
       </body>
     </html>
   );
