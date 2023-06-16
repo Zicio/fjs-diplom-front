@@ -56,7 +56,7 @@ const SignUpForm = () => {
         noValidate
       >
         <FormField
-          type="text"
+          type="string"
           text="Электронная почта пользователя"
           id="email"
           name="email"

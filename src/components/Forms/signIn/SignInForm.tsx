@@ -1,13 +1,13 @@
 "use client";
 
+import styles from "../Form.module.css";
+import FormField from "@/components/FormField/FormField";
+import Button from "@/components/Button/Button";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import loginSchema from "@/utils/schemas/loginSchema";
-import styles from "../Form.module.css";
-import { useState } from "react";
-import FormField from "@/components/FormField/FormField";
-import Button from "@/components/Button/Button";
-import signInRequest from "@/components/Forms/signIn/signIn-Api";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export interface ISignInFormValues {
   email: string;
@@ -21,6 +21,8 @@ export interface ISignInResponse {
 }
 
 const SignInForm = () => {
+  const router = useRouter();
+
   const methods = useForm<ISignInFormValues>({
     mode: "onBlur",
     reValidateMode: "onBlur",
@@ -32,16 +34,16 @@ const SignInForm = () => {
     formState: { isValid },
   } = methods;
 
-  const [errorResponse, setErrorResponse] = useState<string | null>(null);
+  // const [errorResponse, setErrorResponse] = useState<string | null>(null);
 
   const onSubmit = async (data: ISignInFormValues) => {
-    try {
-      const response = await signInRequest(data);
-      const json: ISignInResponse = await response.json();
-      console.log(json);
-      localStorage.user = json;
-    } catch (e) {
-      setErrorResponse((e as Error).message);
+    const res = await signIn("credentials", {
+      redirect: false,
+      ...data,
+    });
+
+    if (res && !res.error) {
+      router.push("/");
     }
   };
 
@@ -53,7 +55,7 @@ const SignInForm = () => {
         noValidate
       >
         <FormField
-          type="text"
+          type="string"
           text="Электронная почта пользователя"
           id="email"
           name="email"
@@ -67,7 +69,7 @@ const SignInForm = () => {
           placeholder="Введите пароль*"
         />
         <Button type="submit" isActive={isValid} text="Войти" />
-        {errorResponse && <p className={styles.form_hint}>errorResponse</p>}
+        {/*{errorResponse && <p className={styles.form_hint}>errorResponse</p>}*/}
       </form>
     </FormProvider>
   );

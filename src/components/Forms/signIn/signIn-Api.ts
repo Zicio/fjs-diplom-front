@@ -1,7 +1,7 @@
 import { ISignInFormValues } from "@/components/Forms/signIn/SignInForm";
 
 const signInRequest = async (data: ISignInFormValues) => {
-  const response = await fetch(
+  return await fetch(
     (process.env.BACKEND_URL || "http://localhost:4000") + `/api/auth/login`,
     {
       method: "POST",
@@ -12,15 +12,15 @@ const signInRequest = async (data: ISignInFormValues) => {
     },
   );
 
-  if (response.ok) {
-    return response;
-  }
-
-  if (response.status === 401) {
-    throw new Error("Пользователь с таким email не найден / неверный пароль");
-  }
-
-  throw new Error("Неизвестная ошибка");
+  // if (response.ok) {
+  //   return response;
+  // }
+  //
+  // if (response.status === 401) {
+  //   throw new Error("Пользователь с таким email не найден / неверный пароль");
+  // }
+  //
+  // throw new Error("Неизвестная ошибка");
 };
 
 export default signInRequest;

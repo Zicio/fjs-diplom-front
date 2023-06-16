@@ -1,7 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
-import getCurrentUserRole from "@/utils/getCurrentUserRole";
-
-const isClient = () => getCurrentUserRole() === "client";
+/*const isClient = () => getCurrentUserRole() === "client";
 
 const isManager = () => getCurrentUserRole() === "manager";
 
@@ -15,8 +12,10 @@ export const middleware = (request: NextRequest) => {
   ) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-};
+};*/
+
+export { default } from "next-auth/middleware";
 
 export const config = {
-  matcher: ["/admin/:path*", "/manager/:path*"],
+  matcher: ["/admin/:path*", "/manager/:path*", "/client/:path*"],
 };
