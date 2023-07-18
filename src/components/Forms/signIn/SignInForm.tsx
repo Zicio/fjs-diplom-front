@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "../Form.module.css";
+import styles from "../Form.module.scss";
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
 import { FormProvider, useForm } from "react-hook-form";

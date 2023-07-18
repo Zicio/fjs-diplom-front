@@ -2,20 +2,19 @@
 
 import Link from "next/link";
 import { FC } from "react";
-import styles from "./NavLink.module.css";
+import styles from "./NavLink.module.scss";
 import { usePathname } from "next/navigation";
 
 const NavLink: FC<{ href: string; text: string }> = ({ href, text }) => {
   const pathname: string = usePathname();
   return (
-    <Link
+    <li
       className={`${pathname === href && styles.nav__link__inactive} ${
         styles.nav__link
       }`}
-      href={href}
     >
-      <li>{text}</li>
-    </Link>
+      <Link href={href}>{text}</Link>
+    </li>
   );
 };
 

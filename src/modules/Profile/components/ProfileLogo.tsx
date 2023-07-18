@@ -1,4 +1,4 @@
-import styles from "../Profile.module.css";
+import styles from "../Profile.module.scss";
 import Image from "next/image";
 import default_avatar from "../../../../public/default_avatar.svg";
 

@@ -1,0 +1,34 @@
+.paginationBar {
+  display: flex;
+  width: fit-content;
+
+  .paginationBar__button {
+    display: block;
+    height: 32px;
+    width: 32px;
+    border: 8px gray;
+    background-color: darkgray;
+    text-align: center;
+    padding-top: 2px;
+    cursor: pointer;
+
+    .button__text {
+      display: inline-block;
+      cursor: pointer;
+    }
+  }
+
+  .paginationBar__button:hover {
+    background-color: darkblue;
+  }
+
+  .paginationBar__button:nth-child(even) {
+    border-left-width: 0;
+    border-right-width: 0;
+  }
+
+  .paginationBar__buttonActive {
+    background-color: blue;
+    @apply bg-blue-700;
+  }
+}

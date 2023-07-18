@@ -3,7 +3,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import registerSchema from "@/utils/schemas/registerSchema";
-import styles from "../Form.module.css";
+import styles from "../Form.module.scss";
 import { useState } from "react";
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";

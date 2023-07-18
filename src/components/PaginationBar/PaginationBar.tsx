@@ -1,4 +1,4 @@
-import styles from "./PaginationBar.module.css";
+import styles from "./PaginationBar.module.scss";
 
 const PaginationBar = () => {
   const MockUsersLength = 30;

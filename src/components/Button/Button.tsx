@@ -1,10 +1,10 @@
 import { FC } from "react";
-import styles from "./Button.module.css";
+import styles from "./Button.module.scss";
 
 interface ButtonProps {
   type: "button" | "submit" | "reset" | undefined;
   text: string;
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({ type, isActive = true, text }) => {

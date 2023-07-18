@@ -1,7 +1,0 @@
-.nav__link {
-    @apply mb-8 last:mb-0;
-}
-
-.nav__link__inactive {
-    @apply opacity-50 cursor-default;
-}

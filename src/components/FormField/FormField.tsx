@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useFormContext } from "react-hook-form";
-import styles from "./FormField.module.css";
+import styles from "./FormField.module.scss";
 
 interface FormFieldProps {
   type: string;

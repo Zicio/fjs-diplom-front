@@ -1,0 +1,15 @@
+.button {
+  width: fit-content;
+  padding: 4px;
+  color: white;
+  border-radius: 6px;
+  background-color: darkblue;
+}
+
+.activeButton:hover {
+  background-color: mediumblue;
+}
+
+.unactiveButton {
+  opacity: 0.5;
+}

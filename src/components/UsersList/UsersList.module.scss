@@ -1,0 +1,15 @@
+.table {
+  width: 80%;
+  text-align: center;
+  table-layout: auto;
+
+  .tableHead {
+    background-color: gray;
+  }
+
+  tr:nth-child(even) {
+    background-color: gray;
+  }
+}
+
+

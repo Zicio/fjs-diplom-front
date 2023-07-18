@@ -1,4 +1,4 @@
-import styles from "./Users.module.css";
+import styles from "./Users.module.scss";
 import SearchUsersForm from "@/components/Forms/searchUsers/SearchUsersForm";
 import UsersList from "@/components/UsersList/UsersList";
 import PaginationBar from "@/components/PaginationBar/PaginationBar";

@@ -2,11 +2,11 @@
 
 import { useContext } from "react";
 import { ProfileContext } from "@/modules/Profile/Profile";
-import button from "@/components/Button/Button";
+import Button from "@/components/Button/Button";
 
 const ProfileButton = () => {
   const isAuth = useContext(ProfileContext);
-  return <button>{isAuth ? "Выйти" : "Войти"}</button>;
+  return <Button type={"button"} text={isAuth ? "Выйти" : "Войти"} />;
 };
 
 export default ProfileButton;

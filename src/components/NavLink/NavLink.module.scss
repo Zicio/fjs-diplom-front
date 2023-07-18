@@ -1,0 +1,12 @@
+.nav__link {
+  margin-bottom: 32px;
+}
+
+.nav__link:last-child {
+  margin-bottom: 0;
+}
+
+.nav__link__inactive {
+  opacity: 0.5;
+  cursor: default;
+}

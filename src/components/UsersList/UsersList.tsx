@@ -1,6 +1,6 @@
 import IUser from "@/interfaces/IUser";
 import UserItem from "@/components/UserItem/UserItem";
-import styles from "./UsersList.module.css";
+import styles from "./UsersList.module.scss";
 
 const mockUsers: IUser[] = [
   {

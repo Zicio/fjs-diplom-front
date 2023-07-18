@@ -2,7 +2,7 @@
 
 import { createContext, FC, ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
-import styles from "./Profile.module.css";
+import styles from "./Profile.module.scss";
 
 export const ProfileContext = createContext(false);
 

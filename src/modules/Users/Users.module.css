@@ -1,7 +1,0 @@
-.users {
-  @apply grid gap-6;
-
-  .users__title {
-    @apply text-2xl
-  }
-}

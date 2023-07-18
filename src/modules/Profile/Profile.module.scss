@@ -1,0 +1,18 @@
+.profile {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  position: relative;
+
+
+  .profile__button {
+
+  }
+
+  .profile__avatar {
+    margin-left: 16px;
+  }
+}
