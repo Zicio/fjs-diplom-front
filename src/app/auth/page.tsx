@@ -1,15 +1,11 @@
-"use client";
-
-import SignInForm from "@/components/Forms/signIn/SignInForm";
-import { useState } from "react";
+import Auth from "@/modules/Auth/Auth";
+import AuthTitle from "@/modules/Auth/components/AuthTitle";
 
 const AuthPage = () => {
-  const [form, setForm] = useState("login");
   return (
-    <div>
-      <h1>Войти или Зарегистрироваться</h1>
-      <SignInForm />
-    </div>
+    <Auth>
+      <AuthTitle />
+    </Auth>
   );
 };
 

@@ -1,17 +1,5 @@
 body {
-    background-image: linear-gradient(
-            45deg,
-            hsl(55deg 99% 70%) 0%,
-            hsl(60deg 82% 72%) 11%,
-            hsl(68deg 81% 76%) 22%,
-            hsl(80deg 80% 79%) 33%,
-            hsl(97deg 79% 82%) 44%,
-            hsl(121deg 78% 85%) 56%,
-            hsl(143deg 84% 82%) 67%,
-            hsl(157deg 89% 78%) 78%,
-            hsl(167deg 92% 74%) 89%,
-            hsl(173deg 95% 70%) 100%
-    );
+    background: linear-gradient(45deg, cyan, yellow);
     height: 100vh;
 }
 
@@ -47,4 +35,20 @@ a {
 .content-container {
     grid-column-start: 2;
     grid-column-end: 3;
+}
+
+.button {
+    width: fit-content;
+    padding: 4px;
+    color: white;
+    border-radius: 6px;
+    background-color: darkblue;
+}
+
+.activeButton:hover {
+    background-color: mediumblue;
+}
+
+.unActiveButton {
+    opacity: 0.5;
 }
