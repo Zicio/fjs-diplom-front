@@ -3,7 +3,7 @@
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
 import { FormProvider, useForm } from "react-hook-form";
-import styles from "../Form.module.scss";
+import styles from "../../../modules/Auth/components/forms/Form.module.scss";
 import { ISignInResponse } from "@/components/Forms/signIn/SignInForm";
 import searchUsersApi from "@/components/Forms/searchUsers/searchUsers-Api";
 

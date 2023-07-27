@@ -1,14 +1,16 @@
-.label {
+.form__label {
   display: none;
 }
 
 .form__input {
+  all: unset;
+  background: white;
   padding: 4px;
   width: 100%;
-  border-width: 1px;
+  border: 1px solid black;
   border-radius: 6px;
 }
 
-.form_hint {
-  color: red;
+.form__inputInvalid {
+  border-color: red;
 }

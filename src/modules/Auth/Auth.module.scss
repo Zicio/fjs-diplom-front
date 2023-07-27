@@ -1,3 +1,10 @@
+.auth__form {
+  display: grid;
+  width: 50%;
+  grid-auto-rows: auto;
+  gap: 16px;
+}
+
 .auth__title {
   font-size: medium;
 }

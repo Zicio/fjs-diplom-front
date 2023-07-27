@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { useFormContext } from "react-hook-form";
 import styles from "./FormField.module.scss";
+import FormHint from "@/components/FormHint/FormHint";
 
 interface FormFieldProps {
   type: string;
@@ -24,13 +25,13 @@ const FormField: FC<FormFieldProps> = ({
 
   return (
     <div>
-      <label className={styles.label} htmlFor={name}>
+      <label className={styles.form__label} htmlFor={name}>
         {text}
       </label>
       <input
         {...register(name)}
-        className={`${errors[name] ? "border-red-500" : "border-blue-200"} ${
-          styles.form__input
+        className={`${styles.form__input} ${
+          errors[name] && styles.form__inputInvalid
         }`}
         type={type}
         id={id}
@@ -38,9 +39,7 @@ const FormField: FC<FormFieldProps> = ({
         placeholder={placeholder}
         required
       />
-      {errors[name] && (
-        <p className={styles.form_hint}>{errors[name]?.message as string}</p>
-      )}
+      {errors[name] && <FormHint text={String(errors[name]?.message)} />}
     </div>
   );
 };

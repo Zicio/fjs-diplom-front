@@ -1,4 +1,4 @@
-import { ISignInFormValues } from "@/components/Forms/signIn/SignInForm";
+import { ISignInFormValues } from "@/modules/Auth/components/Forms/AuthSignInForm";
 
 const signInRequest = async (data: ISignInFormValues) => {
   return await fetch(

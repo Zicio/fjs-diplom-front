@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const schema = yup.object().shape({
+const signInSchema = yup.object().shape({
   email: yup
     .string()
     .email("Неверный формат почты")
@@ -11,4 +11,4 @@ const schema = yup.object().shape({
     .required("Пароль обязателен"),
 });
 
-export default schema;
+export default signInSchema;

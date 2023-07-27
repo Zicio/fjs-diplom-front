@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const RegisterSchema = yup.object().shape({
+const SignUpSchema = yup.object().shape({
   email: yup
     .string()
     .email("Неверный формат почты")
@@ -13,4 +13,4 @@ const RegisterSchema = yup.object().shape({
   contactPhone: yup.string().required("Контактный телефон обязателен"),
 });
 
-export default RegisterSchema;
+export default SignUpSchema;

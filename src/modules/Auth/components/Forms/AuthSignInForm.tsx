@@ -1,13 +1,16 @@
 "use client";
 
-import styles from "../Form.module.scss";
-import FormField from "@/components/FormField/FormField";
-import Button from "@/components/Button/Button";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/modules/Auth/Auth";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import loginSchema from "@/utils/schemas/loginSchema";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import signInSchema from "@/utils/schemas/signInSchema";
+import FormField from "@/components/FormField/FormField";
+import Button from "@/components/Button/Button";
+import signInRequest from "@/modules/Auth/components/forms/signIn-Api";
+import styles from "../../Auth.module.scss";
+import FormHint from "@/components/FormHint/FormHint";
 
 export interface ISignInFormValues {
   email: string;
@@ -20,37 +23,38 @@ export interface ISignInResponse {
   contactPhone: string;
 }
 
-const SignInForm = () => {
+const AuthSignInForm = () => {
   const router = useRouter();
-
+  const { authType } = useContext(AuthContext);
   const methods = useForm<ISignInFormValues>({
     mode: "onBlur",
     reValidateMode: "onBlur",
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(signInSchema),
   });
+  const [errorResponse, setErrorResponse] = useState<string>("");
+
+  if (authType !== "signIn") return null;
 
   const {
     handleSubmit,
     formState: { isValid },
   } = methods;
 
-  // const [errorResponse, setErrorResponse] = useState<string | null>(null);
-
   const onSubmit = async (data: ISignInFormValues) => {
-    const res = await signIn("credentials", {
-      redirect: false,
-      ...data,
-    });
-
-    if (res && !res.error) {
-      router.push("/");
+    try {
+      const res = await signInRequest(data);
+      if (res.ok) {
+        router.push("/");
+      }
+    } catch (e) {
+      setErrorResponse((e as Error).message);
     }
   };
 
   return (
     <FormProvider {...methods}>
       <form
-        className={styles.form}
+        className={styles.auth__form}
         onSubmit={handleSubmit(onSubmit)}
         noValidate
       >
@@ -69,10 +73,10 @@ const SignInForm = () => {
           placeholder="Введите пароль*"
         />
         <Button type="submit" isActive={isValid} text="Войти" />
-        {/*{errorResponse && <p className={styles.form_hint}>errorResponse</p>}*/}
+        {!!errorResponse && <FormHint text={errorResponse} />}
       </form>
     </FormProvider>
   );
 };
 
-export default SignInForm;
+export default AuthSignInForm;
