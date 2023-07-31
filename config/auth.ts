@@ -1,6 +1,6 @@
 import { AuthOptions, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import signInRequest from "@/modules/Auth/components/forms/signIn-Api";
+import signInRequest from "@/modules/Auth/components/Forms/signIn-Api";
 
 const authConfig: AuthOptions = {
   session: { strategy: "jwt", maxAge: 60 * 60 * 1000 },

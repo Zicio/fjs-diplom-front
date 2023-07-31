@@ -18,9 +18,9 @@ const getUsersRequest = async (data: ISearchUsersFormValues) => {
   } catch (e) {
     if (e.response) {
       const { message } = await e.response.json();
-      console.error("Ошибка при отправке запроса", message);
+      console.fetchError("Ошибка при отправке запроса", message);
     }
-    console.error("Ошибка при отправке запроса", e.message);
+    console.fetchError("Ошибка при отправке запроса", e.message);
   }
 };
 

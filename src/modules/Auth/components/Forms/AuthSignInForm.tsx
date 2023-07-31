@@ -8,9 +8,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import signInSchema from "@/utils/schemas/signInSchema";
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
-import signInRequest from "@/modules/Auth/components/forms/signIn-Api";
 import styles from "../../Auth.module.scss";
 import FormHint from "@/components/FormHint/FormHint";
+import { INestException } from "@/interfaces/INestException";
+import signInRequest from "@/modules/Auth/components/Forms/signIn-Api";
 
 export interface ISignInFormValues {
   email: string;
@@ -38,13 +39,22 @@ const AuthSignInForm = () => {
   const {
     handleSubmit,
     formState: { isValid },
+    reset,
   } = methods;
 
   const onSubmit = async (data: ISignInFormValues) => {
     try {
+      setErrorResponse("");
       const res = await signInRequest(data);
       if (res.ok) {
+        reset();
         router.push("/");
+      } else {
+        const nestExceptionString = await res.text();
+        const nestException: INestException = await JSON.parse(
+          nestExceptionString,
+        );
+        setErrorResponse(nestException.message);
       }
     } catch (e) {
       setErrorResponse((e as Error).message);

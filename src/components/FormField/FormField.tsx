@@ -39,7 +39,7 @@ const FormField: FC<FormFieldProps> = ({
         placeholder={placeholder}
         required
       />
-      {errors[name] && <FormHint text={String(errors[name]?.message)} />}
+      {!!errors[name] && <FormHint text={String(errors[name]?.message)} />}
     </div>
   );
 };

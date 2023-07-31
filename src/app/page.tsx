@@ -4,6 +4,5 @@ export const metadata = {
 };
 
 export default function HomePage() {
-  console.log(process.env.NEXTAUTH_SECRET);
   return <div>Hello</div>;
 }

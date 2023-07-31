@@ -1,8 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
-import { AuthContext } from "@/modules/Auth/Auth";
+import { AuthContext, AuthTypes } from "@/modules/Auth/Auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import signUpSchema from "@/utils/schemas/signUpSchema";
 import styles from "../../Auth.module.scss";
@@ -11,6 +10,7 @@ import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
 import FormHint from "@/components/FormHint/FormHint";
 import signUpRequest from "@/modules/Auth/components/Forms/signUp-Api";
+import { INestException } from "@/interfaces/INestException";
 
 export interface ISignUpFormValues {
   email: string;
@@ -26,8 +26,7 @@ export interface ISignUpResponse {
 }
 
 const AuthSignUpForm = () => {
-  const router = useRouter();
-  const { authType } = useContext(AuthContext);
+  const { authType, setAuthType } = useContext(AuthContext);
   const methods = useForm<ISignUpFormValues>({
     mode: "onBlur",
     reValidateMode: "onBlur",
@@ -40,14 +39,22 @@ const AuthSignUpForm = () => {
   const {
     handleSubmit,
     formState: { isValid },
+    reset,
   } = methods;
 
   const onSubmit = async (data: ISignUpFormValues) => {
     try {
+      setErrorResponse("");
       const res = await signUpRequest(data);
-
       if (res.ok) {
-        router.push("/");
+        reset();
+        setAuthType(AuthTypes.signIn);
+      } else {
+        const nestExceptionString = await res.text();
+        const nestException: INestException = await JSON.parse(
+          nestExceptionString,
+        );
+        setErrorResponse(nestException.message);
       }
     } catch (e) {
       setErrorResponse((e as Error).message);
