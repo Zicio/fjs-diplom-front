@@ -10,8 +10,8 @@ import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
 import styles from "../../Auth.module.scss";
 import FormHint from "@/components/FormHint/FormHint";
-import { INestException } from "@/interfaces/INestException";
 import signInRequest from "@/modules/Auth/components/Forms/signIn-Api";
+import { INestException } from "@/interfaces/INestException";
 
 export interface ISignInFormValues {
   email: string;
@@ -45,7 +45,7 @@ const AuthSignInForm = () => {
   const onSubmit = async (data: ISignInFormValues) => {
     try {
       setErrorResponse("");
-      const res = await signInRequest(data);
+      const res = await signInRequest(data); // TODO: нужно ли исползовать data с backend?
       if (res.ok) {
         reset();
         router.push("/");
