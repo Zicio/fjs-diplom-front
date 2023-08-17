@@ -13,7 +13,7 @@ const Button: FC<ButtonProps> = ({ type, isActive = true, text }) => {
       className={
         styles.button +
         " " +
-        (isActive ? styles.activeButton : styles.unactiveButton)
+        (isActive ? styles.activeButton : styles.inactiveButton)
       }
       type={type}
       disabled={!isActive}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/modules/Auth/Auth";
 import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
@@ -10,8 +10,9 @@ import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
 import styles from "../../Auth.module.scss";
 import FormHint from "@/components/FormHint/FormHint";
-import signInRequest from "@/modules/Auth/components/Forms/signIn-Api";
+import { useSignInMutation } from "@/redux/services/authApi";
 import { INestException } from "@/interfaces/INestException";
+import Loader from "@/components/Loader/Loader";
 
 export interface ISignInFormValues {
   email: string;
@@ -26,39 +27,58 @@ export interface ISignInResponse {
 
 const AuthSignInForm = () => {
   const router = useRouter();
-  const { authType } = useContext(AuthContext);
   const methods = useForm<ISignInFormValues>({
     mode: "onBlur",
     reValidateMode: "onBlur",
     resolver: yupResolver(signInSchema),
   });
+
+  //  Context типа формы Auth
+  const { authType } = useContext(AuthContext);
+  //  State ошибок запроса к серверу
   const [errorResponse, setErrorResponse] = useState<string>("");
+  //  RTK Query
+  const [signIn, { isSuccess, isLoading, error, data }] = useSignInMutation();
 
-  if (authType !== "signIn") return null;
-
+  //   Методы react-hook-form
   const {
     handleSubmit,
     formState: { isValid },
     reset,
+    clearErrors,
   } = methods;
 
-  const onSubmit = async (data: ISignInFormValues) => {
-    try {
-      setErrorResponse("");
-      const res = await signInRequest(data); // TODO: нужно ли исползовать data с backend?
-      if (res.ok) {
-        reset();
-        router.push("/");
+  //  Обработка появления плашки с ошибкой запроса к серверу
+  useEffect(() => {
+    if (error) {
+      if ("data" in error) {
+        const errData = "error" in error ? error.error : error.data;
+        setErrorResponse((errData as INestException).message);
       } else {
-        const nestExceptionString = await res.text();
-        const nestException: INestException = await JSON.parse(
-          nestExceptionString,
-        );
-        setErrorResponse(nestException.message);
+        setErrorResponse("Неизвестная ошибка, попробуйте позже");
       }
-    } catch (e) {
-      setErrorResponse((e as Error).message);
     }
+  }, [error]);
+
+  //  Очистка ошибок валидации форм при смене форм
+  useEffect(() => {
+    clearErrors();
+  }, [authType, clearErrors]);
+
+  ///  Редирект на главную, если запрос успешен
+  useEffect(() => {
+    if (isSuccess) {
+      reset();
+      localStorage.user = JSON.stringify(data);
+      router.push("/");
+    }
+  }, [data, isSuccess, reset, router]);
+
+  if (authType !== "signIn") return null;
+
+  const onSubmit = async (data: ISignInFormValues) => {
+    setErrorResponse("");
+    await signIn(data).unwrap();
   };
 
   return (
@@ -74,6 +94,7 @@ const AuthSignInForm = () => {
           id="email"
           name="email"
           placeholder="Введите электронную почту*"
+          disabled={isLoading}
         />
         <FormField
           type="text"
@@ -81,9 +102,15 @@ const AuthSignInForm = () => {
           id="password"
           name="password"
           placeholder="Введите пароль*"
+          disabled={isLoading}
         />
-        <Button type="submit" isActive={isValid} text="Войти" />
-        {!!errorResponse && <FormHint text={errorResponse} />}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Button type="submit" isActive={isValid} text="Войти" />
+        )}
+        {errorResponse && <FormHint text={errorResponse} />}
+        {isSuccess && <FormHint text="Успешно" />}
       </form>
     </FormProvider>
   );

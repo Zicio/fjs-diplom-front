@@ -7,10 +7,6 @@ const ProfileButtonSignIn = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  if (false) {
-    return null;
-  }
-
   return (
     <button
       type="button"

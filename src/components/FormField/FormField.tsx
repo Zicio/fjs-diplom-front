@@ -9,6 +9,7 @@ interface FormFieldProps {
   id: string;
   name: string;
   placeholder: string;
+  disabled?: boolean;
 }
 
 const FormField: FC<FormFieldProps> = ({
@@ -17,6 +18,7 @@ const FormField: FC<FormFieldProps> = ({
   text,
   id,
   placeholder,
+  disabled,
 }) => {
   const {
     register,
@@ -32,11 +34,12 @@ const FormField: FC<FormFieldProps> = ({
         {...register(name)}
         className={`${styles.form__input} ${
           errors[name] && styles.form__inputInvalid
-        }`}
+        } ${disabled && styles.form__inputInactive}`}
         type={type}
         id={id}
         name={name}
         placeholder={placeholder}
+        disabled={disabled}
         required
       />
       {!!errors[name] && <FormHint text={String(errors[name]?.message)} />}

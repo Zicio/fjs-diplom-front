@@ -2,3 +2,13 @@
   color: red;
   margin: 5px 0;
 }
+
+.form__hint.entering {
+  opacity: 0;
+}
+
+.form__hint.entered {
+  opacity: 1;
+  transition: opacity 2s ease;
+}
+

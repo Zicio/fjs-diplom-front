@@ -1,10 +1,6 @@
 "use client";
 
 const ProfileButtonSignOut = () => {
-  if (true) {
-    return null;
-  }
-
   return (
     <button
       type="reset"
