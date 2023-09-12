@@ -13,6 +13,8 @@ import FormHint from "@/components/FormHint/FormHint";
 import { useSignInMutation } from "@/redux/services/authApi";
 import { INestException } from "@/interfaces/INestException";
 import Loader from "@/components/Loader/Loader";
+import { useAppDispatch } from "@/redux/hooks";
+import { userActions } from "@/redux/reducers/UserSlice";
 
 export interface ISignInFormValues {
   email: string;
@@ -39,6 +41,8 @@ const AuthSignInForm = () => {
   const [errorResponse, setErrorResponse] = useState<string>("");
   //  RTK Query
   const [signIn, { isSuccess, isLoading, error, data }] = useSignInMutation();
+  //  Redux UserSlice
+  const dispatch = useAppDispatch();
 
   //   Методы react-hook-form
   const {
@@ -70,9 +74,10 @@ const AuthSignInForm = () => {
     if (isSuccess) {
       reset();
       localStorage.user = JSON.stringify(data);
+      dispatch(userActions.setUser(JSON.parse(localStorage.user)));
       router.push("/");
     }
-  }, [data, isSuccess, reset, router]);
+  }, [data, dispatch, isSuccess, reset, router]);
 
   if (authType !== "signIn") return null;
 

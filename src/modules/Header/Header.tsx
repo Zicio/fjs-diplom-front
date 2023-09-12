@@ -8,13 +8,11 @@ import Profile from "@/modules/Profile/Profile";
 import styles from "./Header.module.scss";
 import ProfileButtonSignIn from "@/modules/Profile/components/ProfileButtonSignIn";
 import ProfileButtonSignOut from "@/modules/Profile/components/ProfileButtonSignOut";
-import { useEffect, useState } from "react";
+import { useAppSelector } from "@/redux/hooks";
 
 const Header = () => {
-  const [isAuth, setIsAuth] = useState(false);
-  useEffect(() => {
-    setIsAuth(!!localStorage.user); // TODO: Передать user в некий глобальный стейт и смотреть уже по нему
-  }, [isAuth]);
+  const user = useAppSelector((state) => state.user);
+  console.log({ user });
 
   return (
     <header className={styles.header}>
@@ -22,9 +20,7 @@ const Header = () => {
         <Image src={logo} alt={"Logo"} width={200} />
       </Link>
       <Profile>
-        {isAuth ? <ProfileButtonSignOut /> : <ProfileButtonSignIn />}
-        {/*<ProfileButtonSignIn />*/}
-        {/*<ProfileButtonSignOut />*/}
+        {user ? <ProfileButtonSignOut /> : <ProfileButtonSignIn />}
         <ProfileLogo />
       </Profile>
     </header>

@@ -5,6 +5,7 @@ import Header from "@/modules/Header/Header";
 import StoreProvider from "@/redux/StoreProvider";
 import { NextFont } from "next/dist/compiled/@next/font";
 import { ReactNode } from "react";
+import WithUser from "@/redux/WithUser";
 
 const roboto: NextFont = Roboto({
   weight: "400",
@@ -17,11 +18,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ru" className={roboto.className}>
       <body>
         <StoreProvider>
-          <div className="main-container">
-            <Header />
-            <Navbar />
-            <main className="content-container">{children}</main>
-          </div>
+          <WithUser>
+            <div className="main-container">
+              <Header />
+              <Navbar />
+              <main className="content-container">{children}</main>
+            </div>
+          </WithUser>
         </StoreProvider>
       </body>
     </html>
