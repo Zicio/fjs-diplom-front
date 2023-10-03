@@ -1,5 +1,5 @@
 import { FC } from "react";
-import styles from "./FormHint.module.scss";
+import styles from "./FormHint.module.css";
 
 interface FormHintProps {
   text: string;

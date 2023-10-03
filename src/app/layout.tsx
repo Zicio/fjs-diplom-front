@@ -1,11 +1,9 @@
 import "../styles/globals.css";
-import Navbar from "@/modules/NavBar/Navbar";
 import { Roboto } from "next/font/google";
-import Header from "@/modules/Header/Header";
-import StoreProvider from "@/redux/StoreProvider";
+import Header from "@/components/Header/Header";
 import { NextFont } from "next/dist/compiled/@next/font";
 import { ReactNode } from "react";
-import WithUser from "@/redux/WithUser";
+import Navbar from "@/components/NavBar/Navbar";
 
 const roboto: NextFont = Roboto({
   weight: "400",
@@ -17,15 +15,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ru" className={roboto.className}>
       <body>
-        <StoreProvider>
-          <WithUser>
-            <div className="main-container">
-              <Header />
-              <Navbar />
-              <main className="content-container">{children}</main>
-            </div>
-          </WithUser>
-        </StoreProvider>
+        <div className="main-container">
+          <Header />
+          <Navbar />
+          <main className="content-container">{children}</main>
+        </div>
       </body>
     </html>
   );

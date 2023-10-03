@@ -1,20 +1,17 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/modules/Auth/Auth";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import signInSchema from "@/utils/schemas/signInSchema";
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
-import styles from "../../Auth.module.scss";
+import styles from "../auth.module.css";
 import FormHint from "@/components/FormHint/FormHint";
-import { useSignInMutation } from "@/redux/services/authApi";
-import { INestException } from "@/interfaces/INestException";
 import Loader from "@/components/Loader/Loader";
-import { useAppDispatch } from "@/redux/hooks";
-import { userActions } from "@/redux/reducers/UserSlice";
+import { Roles } from "@/utils/getCurrentUserRole";
+import Cookies from "js-cookie";
 
 export interface ISignInFormValues {
   email: string;
@@ -25,6 +22,8 @@ export interface ISignInResponse {
   email: string;
   name: string;
   contactPhone: string;
+  role: Roles;
+  accessToken: string;
 }
 
 const AuthSignInForm = () => {
@@ -35,14 +34,9 @@ const AuthSignInForm = () => {
     resolver: yupResolver(signInSchema),
   });
 
-  //  Context типа формы Auth
-  const { authType } = useContext(AuthContext);
   //  State ошибок запроса к серверу
   const [errorResponse, setErrorResponse] = useState<string>("");
-  //  RTK Query
-  const [signIn, { isSuccess, isLoading, error, data }] = useSignInMutation();
-  //  Redux UserSlice
-  const dispatch = useAppDispatch();
+  const [data, setData] = useState<ISignInResponse>();
 
   //   Методы react-hook-form
   const {
@@ -52,38 +46,42 @@ const AuthSignInForm = () => {
     clearErrors,
   } = methods;
 
-  //  Обработка появления плашки с ошибкой запроса к серверу
-  useEffect(() => {
-    if (error) {
-      if ("data" in error) {
-        const errData = "error" in error ? error.error : error.data;
-        setErrorResponse((errData as INestException).message);
-      } else {
-        setErrorResponse("Неизвестная ошибка, попробуйте позже");
-      }
-    }
-  }, [error]);
-
   //  Очистка ошибок валидации форм при смене форм
   useEffect(() => {
     clearErrors();
-  }, [authType, clearErrors]);
+  }, [clearErrors]);
 
   ///  Редирект на главную, если запрос успешен
   useEffect(() => {
-    if (isSuccess) {
+    if (data) {
       reset();
       localStorage.user = JSON.stringify(data);
-      dispatch(userActions.setUser(JSON.parse(localStorage.user)));
+      Cookies.set("access_token", data.accessToken);
+      router.refresh();
       router.push("/");
     }
-  }, [data, dispatch, isSuccess, reset, router]);
-
-  if (authType !== "signIn") return null;
+  }, [data, reset, router]);
 
   const onSubmit = async (data: ISignInFormValues) => {
     setErrorResponse("");
-    await signIn(data).unwrap();
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/auth/login",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      },
+    );
+    if (res.ok) {
+      const newData = await res.json();
+      setData(newData);
+    } else {
+      const errData = await res.json();
+      setErrorResponse(errData.message);
+    }
   };
 
   return (
@@ -99,7 +97,7 @@ const AuthSignInForm = () => {
           id="email"
           name="email"
           placeholder="Введите электронную почту*"
-          disabled={isLoading}
+          disabled={false}
         />
         <FormField
           type="text"
@@ -107,15 +105,14 @@ const AuthSignInForm = () => {
           id="password"
           name="password"
           placeholder="Введите пароль*"
-          disabled={isLoading}
+          disabled={false}
         />
-        {isLoading ? (
+        {false ? (
           <Loader />
         ) : (
           <Button type="submit" isActive={isValid} text="Войти" />
         )}
         {errorResponse && <FormHint text={errorResponse} />}
-        {isSuccess && <FormHint text="Успешно" />}
       </form>
     </FormProvider>
   );

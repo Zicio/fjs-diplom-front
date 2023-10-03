@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useFormContext } from "react-hook-form";
-import styles from "./FormField.module.scss";
+import styles from "./FormField.module.css";
 import FormHint from "@/components/FormHint/FormHint";
 
 interface FormFieldProps {

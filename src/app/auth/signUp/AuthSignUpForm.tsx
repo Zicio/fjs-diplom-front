@@ -1,17 +1,16 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-import { AuthContext, AuthTypes } from "@/modules/Auth/Auth";
+import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import signUpSchema from "@/utils/schemas/signUpSchema";
-import styles from "../../Auth.module.scss";
+import styles from "../auth.module.css";
 import { FormProvider, useForm } from "react-hook-form";
 import FormField from "@/components/FormField/FormField";
 import Button from "@/components/Button/Button";
 import FormHint from "@/components/FormHint/FormHint";
 import { INestException } from "@/interfaces/INestException";
-import { useSignUpMutation } from "@/redux/services/authApi";
 import Loader from "@/components/Loader/Loader";
+import { useRouter } from "next/navigation";
 
 export interface ISignUpFormValues {
   email: string;
@@ -27,20 +26,17 @@ export interface ISignUpResponse {
 }
 
 const AuthSignUpForm = () => {
+  const router = useRouter();
+
   const methods = useForm<ISignUpFormValues>({
     mode: "onBlur",
     reValidateMode: "onBlur",
     resolver: yupResolver(signUpSchema),
   });
 
-  //  Context типа формы Auth
-  const { authType, setAuthType } = useContext(AuthContext);
   //  State ошибок запроса к серверу
   const [errorResponse, setErrorResponse] = useState<string>("");
-  // RTK Query
-  const [signUp, { isLoading, isSuccess, error }] = useSignUpMutation();
 
-  //  Метода для отправки запроса к серверу
   const {
     handleSubmit,
     formState: { isValid },
@@ -49,35 +45,38 @@ const AuthSignUpForm = () => {
   } = methods;
 
   //  Обработка появления плашки с ошибкой запроса к серверу
-  useEffect(() => {
-    if (error) {
-      if ("data" in error) {
-        const errData = "error" in error ? error.error : error.data;
-        setErrorResponse((errData as INestException).message);
-      } else {
-        setErrorResponse("Неизвестная ошибка, попробуйте позже");
-      }
-    }
-  }, [error]);
+  // useEffect(() => {
+  //   if (error) {
+  //     if ("data" in error) {
+  //       const errData = "error" in error ? error.error : error.data;
+  //       setErrorResponse((errData as INestException).message);
+  //     } else {
+  //       setErrorResponse("Неизвестная ошибка, попробуйте позже");
+  //     }
+  //   }
+  // }, [error]);
 
   //  Очистка ошибок валидации форм при смене форм
   useEffect(() => {
     clearErrors();
-  }, [authType, clearErrors]);
-
-  //  Редирект на форму SignIn, если запрос успешен
-  useEffect(() => {
-    if (isSuccess) {
-      reset();
-      setAuthType(AuthTypes.signIn);
-    }
-  }, [isSuccess, reset, setAuthType]);
-
-  if (authType !== "signUp") return null;
+  }, [clearErrors]);
 
   const onSubmit = async (data: ISignUpFormValues) => {
     setErrorResponse("");
-    await signUp(data);
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_URL + "/api/client/register",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      },
+    );
+    if (res.ok) {
+      router.push("/auth/signIn");
+    }
   };
 
   return (
@@ -115,13 +114,12 @@ const AuthSignUpForm = () => {
           name="contactPhone"
           placeholder="Введите номер телефона*"
         />
-        {isLoading ? (
+        {false ? (
           <Loader />
         ) : (
           <Button type="submit" isActive={isValid} text="Зарегистрироваться" />
         )}
         {!!errorResponse && <FormHint text={errorResponse} />}
-        {isSuccess && <FormHint text="Успешно" />}
       </form>
     </FormProvider>
   );

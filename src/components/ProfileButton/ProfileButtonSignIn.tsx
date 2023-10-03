@@ -13,7 +13,7 @@ const ProfileButtonSignIn = () => {
       className={`button activeButton`}
       onClick={() => {
         if (pathname !== "/auth") {
-          router.push("/auth");
+          router.push("/auth/signIn");
         }
       }}
     >

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FC } from "react";
-import styles from "./NavLink.module.scss";
+import styles from "./NavLink.module.css";
 import { usePathname } from "next/navigation";
 
 const NavLink: FC<{ href: string; text: string }> = ({ href, text }) => {
